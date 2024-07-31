@@ -44,8 +44,8 @@ the dp transitions below. Here, $p$ refers to the value array.
 
 $$
 \begin{align*}
-dp[i][0][0][0] &= 0 \\
-dp[i][1][l][r] &= \max(dp[i - 1][0][0][0], dp[i - 1][1][l][r]) +
+dp[i][0] &= 0 \\
+dp[i][1][l][r] &= \max(dp[i - 1][0], dp[i - 1][1][l][r]) +
                   \sum_{j = l}^r p[i][j] \\
 dp[i][2][l][r] &= \max(\max_{1 \leq l' < l} dp[i - 1][1][l'][r],
                        \max_{l \leq l' \leq r + 1, \max(l', r) \leq r' \leq n}
@@ -54,22 +54,22 @@ dp[i][2][l][r] &= \max(\max_{1 \leq l' < l} dp[i - 1][1][l'][r],
 dp[i][3][l][r] &= \max(\max_{l \leq r' < r} dp[i - 1][2][l][r'],
                        dp[i - 1][3][l][r]) +
                   \sum_{j = l}^r p[i][j] \\
-dp[i][4][0][0] &= \max(\max_{1 \leq l \leq r \leq n} dp[i - 1][3][l][r],
-                       dp[i - 1][4][0][0]) \\
-dp[i][5][l][r] &= dp[i - 1][4][0][0] + \sum_{j = l}^r p[i][j] \\
+dp[i][4] &= \max(\max_{1 \leq l \leq r \leq n} dp[i - 1][3][l][r],
+                       dp[i - 1][4]) \\
+dp[i][5][l][r] &= dp[i - 1][4] + \sum_{j = l}^r p[i][j] \\
 dp[i][6][l][r] &= \max(dp[i - 1][5][l][r], dp[i - 1][6][l][r]) +
                   (p[i][l] + p[i][r]) \\
 dp[i][7][l][r] &= dp[i - 1][6][l][r] + \sum_{j = l}^r p[i][j] \\
-dp[i][8][0][0] &= \max(\max_{1 \leq l \leq r \leq n} dp[i - 1][7][l][r],
-                       dp[i - 1][8][0][0]) \\
-dp[i][9][l][r] &= \max(dp[i - 1][8][0][0],
+dp[i][8] &= \max(\max_{1 \leq l \leq r \leq n} dp[i - 1][7][l][r],
+                       dp[i - 1][8]) \\
+dp[i][9][l][r] &= \max(dp[i - 1][8],
                        dp[i - 1][9][l][r]) + (p[i][l] + p[i][r]) \\
 dp[i][10][l][r] &= \max(dp[i - 1][9][l][r], dp[i - 1][10][l][r]) +
                    \sum_{j = l}^r p[i][j] \\
 dp[i][11][l][r] &= \max(dp[i - 1][10][l][r], dp[i - 1][11][l][r]) +
                    (p[i][l] + p[i][r]) \\
-dp[i][12][0][0] &= \max(\max_{1 \leq l \leq r \leq n} dp[i - 1][11][l][r],
-                        dp[i - 1][12][0][0])
+dp[i][12] &= \max(\max_{1 \leq l \leq r \leq n} dp[i - 1][11][l][r],
+                        dp[i - 1][12])
 \end{align*}
 $$
 
@@ -121,12 +121,12 @@ int chmax(int &a, int b) {
 int psum(int xl, int xr, int yl, int yr) {
   return ps[xr][yr] - ps[xl - 1][yr] - ps[xr][yl - 1] + ps[xl - 1][yl - 1];
 }
-void tr0(int /*i*/) { cur[0][0][0] = pre[0][0][0]; }
+void tr0(int /*i*/) { cur[0] = pre[0]; }
 void tr1(int i) {
   for (int l = 1; l <= n; ++l) {
     for (int r = l; r <= n; ++r) {
       chmax(cur[1][l][r],
-            std::max(pre[0][0][0], pre[1][l][r]) + psum(i, i, l, r));
+            std::max(pre[0], pre[1][l][r]) + psum(i, i, l, r));
     }
   }
 }
@@ -165,17 +165,17 @@ void tr3(int i) {
   }
 }
 void tr4(int /*i*/) {
-  chmax(cur[4][0][0], pre[4][0][0]);
+  chmax(cur[4], pre[4]);
   for (int l = 1; l <= n; ++l) {
     for (int r = l; r <= n; ++r) {
-      chmax(cur[4][0][0], pre[3][l][r]);
+      chmax(cur[4], pre[3][l][r]);
     }
   }
 }
 void tr5(int i) {
   for (int l = 1; l <= n; ++l) {
     for (int r = l + 2; r <= n; ++r) {
-      chmax(cur[5][l][r], pre[4][0][0] + psum(i, i, l, r));
+      chmax(cur[5][l][r], pre[4] + psum(i, i, l, r));
     }
   }
 }
@@ -195,10 +195,10 @@ void tr7(int i) {
   }
 }
 void tr8(int /*i*/) {
-  chmax(cur[8][0][0], pre[8][0][0]);
+  chmax(cur[8], pre[8]);
   for (int l = 1; l <= n; ++l) {
     for (int r = l; r <= n; ++r) {
-      chmax(cur[8][0][0], pre[7][l][r]);
+      chmax(cur[8], pre[7][l][r]);
     }
   }
 }
@@ -206,7 +206,7 @@ void tr9(int i) {
   for (int l = 1; l <= n; ++l) {
     for (int r = l + 2; r <= n; ++r) {
       chmax(cur[9][l][r],
-            std::max(pre[8][0][0], pre[9][l][r]) + p[i][l] + p[i][r]);
+            std::max(pre[8], pre[9][l][r]) + p[i][l] + p[i][r]);
     }
   }
 }
@@ -227,10 +227,10 @@ void tr11(int i) {
   }
 }
 void tr12(int /*i*/) {
-  chmax(cur[12][0][0], pre[12][0][0]);
+  chmax(cur[12], pre[12]);
   for (int l = 1; l <= n; ++l) {
     for (int r = l; r <= n; ++r) {
-      chmax(cur[12][0][0], pre[11][l][r]);
+      chmax(cur[12], pre[11][l][r]);
     }
   }
 }
@@ -257,7 +257,7 @@ int main() {
 
   pre.fill(std::vector(n + 1, std::vector(n + 1, -INF<int>)));
   cur.fill(std::vector(n + 1, std::vector(n + 1, -INF<int>)));
-  pre[0][0][0] = 0;
+  pre[0] = 0;
   for (int i = 1; i <= m; ++i) {
     tr0(i);
     tr1(i);
@@ -275,7 +275,7 @@ int main() {
     pre.swap(cur);
     cur.fill(std::vector(n + 1, std::vector(n + 1, -INF<int>)));
   }
-  int ans = pre[12][0][0];
+  int ans = pre[12];
   for (int l = 1; l <= n; ++l) {
     for (int r = l; r <= n; ++r) {
       chmax(ans, pre[11][l][r]);
