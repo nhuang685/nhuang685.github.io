@@ -22,19 +22,21 @@ use Dynamic Programming to solve the problem.
 Let $dp[i][st]$ represent the maximum value when we have wrote on the
 $1..i$th column and are in writing state $st$. The states are the following:
 
-0. Left of `N`
-1. 1st rectangle of `N`
-2. Intermediate rectangles of `N`
-3. Last rectangle of `N`
-4. Between `N` and `O`
-5. First column of `O`
-6. Intermediate columns of `O`
-7. Last column of `O`
-8. Between `O` and `I`
-9. Left columns of `I`
-10. Middle columns of `I`
-11. Right columns of `I`
-12. Right of `I`
+<ol start="0">
+<li>Left of "N"</li>
+<li>1st rectangle of "N"</li>
+<li>Intermediate rectangles of "N"</li>
+<li>Last rectangle of "N"</li>
+<li>Between "N" and "O"</li>
+<li>First column of "O"</li>
+<li>Intermediate columns of "O"</li>
+<li>Last column of "O"</li>
+<li>Between "O" and "I"</li>
+<li>Left columns of "I"</li>
+<li>Middle columns of "I"</li>
+<li>Right columns of "I"</li>
+<li>Right of "I"</li>
+</ol>
 
 For states $1, 2, 3, 5, 7, 10$, we can add two dimensions $l$ and $r$
 that represent the lowest and highest row covered on column $i$.
