@@ -72,7 +72,7 @@ dp[i][10][l][r] &= \max(dp[i - 1][9][l][r], dp[i - 1][10][l][r]) +
 dp[i][11][l][r] &= \max(dp[i - 1][10][l][r], dp[i - 1][11][l][r]) +
                    (p[i][l] + p[i][r]), \\
 dp[i][12] &= \max(\max_{1 \leq l \leq r \leq n} dp[i - 1][11][l][r],
-                        dp[i - 1][12]),
+                        dp[i - 1][12]).
 \end{align*}
 $$
 
