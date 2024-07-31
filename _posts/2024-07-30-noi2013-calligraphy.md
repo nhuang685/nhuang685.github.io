@@ -24,7 +24,7 @@ $1..i$th column and are in writing state $st$. The states are the following:
 
 0. Left of `N`
 1. 1st rectangle of `N`
-2. intermediate rectangles of `N`
+2. Intermediate rectangles of `N`
 3. Last rectangle of `N`
 4. Between `N` and `O`
 5. First column of `O`
