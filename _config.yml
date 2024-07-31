@@ -29,6 +29,7 @@ url: https://nhuang685.github.io # the base hostname & protocol for your site, e
 
 # Build settings
 theme: minima
+# remote_theme: "mmistakes/minimal-mistakes@4.26.2"
 plugins:
   - jekyll-feed
 

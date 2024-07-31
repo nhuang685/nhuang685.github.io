@@ -4,6 +4,7 @@ title: "NOI 2013 - 书法家"
 date: 2024-07-30 16:35:01 -0700
 categories: noi dp
 math: true
+# classes: wide
 ---
 
 Problem Link: [LOJ2668](https://loj.ac/p/2668)
@@ -44,32 +45,32 @@ the dp transitions below. Here, $p$ refers to the value array.
 
 $$
 \begin{align*}
-dp[i][0] &= 0 \\
+dp[i][0] &= 0, \\
 dp[i][1][l][r] &= \max(dp[i - 1][0], dp[i - 1][1][l][r]) +
-                  \sum_{j = l}^r p[i][j] \\
+                  \sum_{j = l}^r p[i][j], \\
 dp[i][2][l][r] &= \max(\max_{1 \leq l' < l} dp[i - 1][1][l'][r],
                        \max_{l \leq l' \leq r + 1, \max(l', r) \leq r' \leq n}
                           dp[i - 1][2][l'][r']) +
-                  \sum_{j = l}^r p[i][j] \\
+                  \sum_{j = l}^r p[i][j], \\
 dp[i][3][l][r] &= \max(\max_{l \leq r' < r} dp[i - 1][2][l][r'],
                        dp[i - 1][3][l][r]) +
-                  \sum_{j = l}^r p[i][j] \\
+                  \sum_{j = l}^r p[i][j], \\
 dp[i][4] &= \max(\max_{1 \leq l \leq r \leq n} dp[i - 1][3][l][r],
-                       dp[i - 1][4]) \\
-dp[i][5][l][r] &= dp[i - 1][4] + \sum_{j = l}^r p[i][j] \\
+                       dp[i - 1][4]), \\
+dp[i][5][l][r] &= dp[i - 1][4] + \sum_{j = l}^r p[i][j], \\
 dp[i][6][l][r] &= \max(dp[i - 1][5][l][r], dp[i - 1][6][l][r]) +
-                  (p[i][l] + p[i][r]) \\
-dp[i][7][l][r] &= dp[i - 1][6][l][r] + \sum_{j = l}^r p[i][j] \\
+                  (p[i][l] + p[i][r]), \\
+dp[i][7][l][r] &= dp[i - 1][6][l][r] + \sum_{j = l}^r p[i][j], \\
 dp[i][8] &= \max(\max_{1 \leq l \leq r \leq n} dp[i - 1][7][l][r],
-                       dp[i - 1][8]) \\
+                       dp[i - 1][8]), \\
 dp[i][9][l][r] &= \max(dp[i - 1][8],
-                       dp[i - 1][9][l][r]) + (p[i][l] + p[i][r]) \\
+                       dp[i - 1][9][l][r]) + (p[i][l] + p[i][r]), \\
 dp[i][10][l][r] &= \max(dp[i - 1][9][l][r], dp[i - 1][10][l][r]) +
-                   \sum_{j = l}^r p[i][j] \\
+                   \sum_{j = l}^r p[i][j], \\
 dp[i][11][l][r] &= \max(dp[i - 1][10][l][r], dp[i - 1][11][l][r]) +
-                   (p[i][l] + p[i][r]) \\
+                   (p[i][l] + p[i][r]), \\
 dp[i][12] &= \max(\max_{1 \leq l \leq r \leq n} dp[i - 1][11][l][r],
-                        dp[i - 1][12])
+                        dp[i - 1][12]),
 \end{align*}
 $$
 
