@@ -3,6 +3,7 @@ layout: post
 title: "NOI 2013 - 书法家"
 date: 2024-07-30 16:35:01 -0700
 categories: noi dp
+math: true
 ---
 
 Problem Link: [LOJ2668](https://loj.ac/p/2668)
@@ -40,6 +41,7 @@ Likewise, for states $6, 9$, and $11$, we can add two dimensions $l$ and $r$
 that represent the two rows covered on column $i$. Using these
 dimensions and the restrictions described in the problem, we can create
 the dp transitions below. Here, $p$ refers to the value array.
+
 $$
 \begin{align*}
 dp[i][0][0][0] &= 0 \\
