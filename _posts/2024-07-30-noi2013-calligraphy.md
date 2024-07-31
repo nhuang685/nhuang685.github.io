@@ -121,12 +121,12 @@ int chmax(int &a, int b) {
 int psum(int xl, int xr, int yl, int yr) {
   return ps[xr][yr] - ps[xl - 1][yr] - ps[xr][yl - 1] + ps[xl - 1][yl - 1];
 }
-void tr0(int /*i*/) { cur[0] = pre[0]; }
+void tr0(int /*i*/) { cur[0][0][0] = pre[0][0][0]; }
 void tr1(int i) {
   for (int l = 1; l <= n; ++l) {
     for (int r = l; r <= n; ++r) {
       chmax(cur[1][l][r],
-            std::max(pre[0], pre[1][l][r]) + psum(i, i, l, r));
+            std::max(pre[0][0][0], pre[1][l][r]) + psum(i, i, l, r));
     }
   }
 }
@@ -165,17 +165,17 @@ void tr3(int i) {
   }
 }
 void tr4(int /*i*/) {
-  chmax(cur[4], pre[4]);
+  chmax(cur[4][0][0], pre[4][0][0]);
   for (int l = 1; l <= n; ++l) {
     for (int r = l; r <= n; ++r) {
-      chmax(cur[4], pre[3][l][r]);
+      chmax(cur[4][0][0], pre[3][l][r]);
     }
   }
 }
 void tr5(int i) {
   for (int l = 1; l <= n; ++l) {
     for (int r = l + 2; r <= n; ++r) {
-      chmax(cur[5][l][r], pre[4] + psum(i, i, l, r));
+      chmax(cur[5][l][r], pre[4][0][0] + psum(i, i, l, r));
     }
   }
 }
@@ -195,10 +195,10 @@ void tr7(int i) {
   }
 }
 void tr8(int /*i*/) {
-  chmax(cur[8], pre[8]);
+  chmax(cur[8][0][0], pre[8][0][0]);
   for (int l = 1; l <= n; ++l) {
     for (int r = l; r <= n; ++r) {
-      chmax(cur[8], pre[7][l][r]);
+      chmax(cur[8][0][0], pre[7][l][r]);
     }
   }
 }
@@ -206,7 +206,7 @@ void tr9(int i) {
   for (int l = 1; l <= n; ++l) {
     for (int r = l + 2; r <= n; ++r) {
       chmax(cur[9][l][r],
-            std::max(pre[8], pre[9][l][r]) + p[i][l] + p[i][r]);
+            std::max(pre[8][0][0], pre[9][l][r]) + p[i][l] + p[i][r]);
     }
   }
 }
@@ -227,10 +227,10 @@ void tr11(int i) {
   }
 }
 void tr12(int /*i*/) {
-  chmax(cur[12], pre[12]);
+  chmax(cur[12][0][0], pre[12][0][0]);
   for (int l = 1; l <= n; ++l) {
     for (int r = l; r <= n; ++r) {
-      chmax(cur[12], pre[11][l][r]);
+      chmax(cur[12][0][0], pre[11][l][r]);
     }
   }
 }
@@ -257,7 +257,7 @@ int main() {
 
   pre.fill(std::vector(n + 1, std::vector(n + 1, -INF<int>)));
   cur.fill(std::vector(n + 1, std::vector(n + 1, -INF<int>)));
-  pre[0] = 0;
+  pre[0][0][0] = 0;
   for (int i = 1; i <= m; ++i) {
     tr0(i);
     tr1(i);
@@ -275,7 +275,7 @@ int main() {
     pre.swap(cur);
     cur.fill(std::vector(n + 1, std::vector(n + 1, -INF<int>)));
   }
-  int ans = pre[12];
+  int ans = pre[12][0][0];
   for (int l = 1; l <= n; ++l) {
     for (int r = l; r <= n; ++r) {
       chmax(ans, pre[11][l][r]);
